@@ -1,0 +1,1122 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduSphere - Student Management System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#202b3c;
+}
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#101b3d,#243b75,#7657d9);
+}
+
+.login-box{
+    width:400px;
+    padding:40px;
+    background:white;
+    border-radius:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+.logo{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border-radius:22px;
+    background:linear-gradient(135deg,#5b5fe9,#8b5cf6);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    font-weight:bold;
+}
+
+.login-box h1{
+    margin-top:18px;
+    color:#202b5b;
+}
+
+.login-box p{
+    color:#777;
+    margin:8px 0 25px;
+}
+
+.input-box{
+    margin:17px 0;
+    text-align:left;
+}
+
+.input-box label{
+    font-size:14px;
+    font-weight:bold;
+    color:#444;
+}
+
+.input-box input{
+    width:100%;
+    padding:14px;
+    margin-top:7px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+.input-box input:focus{
+    border-color:#7657d9;
+}
+
+.login-btn,
+.primary-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#5b5fe9,#8b5cf6);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-btn:hover,
+.primary-btn:hover{
+    opacity:.9;
+}
+
+.login-info{
+    margin-top:20px;
+    padding:12px;
+    background:#f3f1ff;
+    border-radius:10px;
+    font-size:13px;
+    color:#555;
+}
+
+.dashboard{
+    display:none;
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    width:250px;
+    height:100vh;
+    background:linear-gradient(180deg,#101b3d,#202d62);
+    color:white;
+    padding:25px 18px;
+    overflow-y:auto;
+}
+
+.brand{
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:35px;
+}
+
+.brand span{
+    color:#a78bfa;
+}
+
+.sidebar a{
+    display:block;
+    color:#dce3ff;
+    text-decoration:none;
+    padding:14px 15px;
+    margin:7px 0;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:rgba(255,255,255,.15);
+    color:white;
+}
+
+.logout{
+    margin-top:30px;
+    background:#ef4444 !important;
+}
+
+.main{
+    margin-left:250px;
+    padding:25px;
+}
+
+.topbar{
+    background:white;
+    padding:18px 25px;
+    border-radius:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.topbar h2{
+    color:#202b5b;
+}
+
+.admin{
+    background:#eef0ff;
+    padding:10px 16px;
+    border-radius:20px;
+    color:#555;
+    font-weight:bold;
+}
+
+.section{
+    display:none;
+    margin-top:25px;
+}
+
+.section.active{
+    display:block;
+}
+
+.welcome{
+    background:linear-gradient(135deg,#5b5fe9,#8b5cf6);
+    color:white;
+    padding:30px;
+    border-radius:20px;
+    margin-bottom:25px;
+}
+
+.welcome h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:23px;
+    border-radius:17px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.card .icon{
+    font-size:30px;
+}
+
+.card h3{
+    margin:12px 0 5px;
+}
+
+.card p{
+    color:#777;
+    line-height:1.6;
+}
+
+.form-container{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+    color:#444;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    outline:none;
+}
+
+.form-group textarea{
+    height:80px;
+    resize:none;
+}
+
+.full{
+    grid-column:1/3;
+}
+
+.table-container{
+    background:white;
+    padding:22px;
+    border-radius:18px;
+    overflow-x:auto;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid #eee;
+    text-align:left;
+}
+
+th{
+    background:#f2f3ff;
+    color:#333;
+}
+
+.badge{
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.paid{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.pending{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.progress{
+    width:100%;
+    height:8px;
+    background:#eee;
+    border-radius:10px;
+    margin-top:6px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#6366f1;
+    border-radius:10px;
+}
+
+.report-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.report{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.report h3{
+    margin-bottom:15px;
+}
+
+.search{
+    padding:12px;
+    width:300px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    margin-bottom:10px;
+    outline:none;
+}
+
+.action-btn{
+    border:none;
+    padding:7px 10px;
+    border-radius:7px;
+    cursor:pointer;
+    margin:2px;
+}
+
+.edit{
+    background:#e0e7ff;
+    color:#3730a3;
+}
+
+.delete{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+@media(max-width:1000px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .main{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .form-grid,
+    .report-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:1;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .login-box{
+        width:90%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-page" id="loginPage">
+
+    <div class="login-box">
+
+        <div class="logo">E</div>
+
+        <h1>EduSphere</h1>
+
+        <p>Smart Student Management System</p>
+
+        <div class="input-box">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter username">
+        </div>
+
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password">
+        </div>
+
+        <button class="login-btn" onclick="login()">Admin Login</button>
+
+        <div class="login-info">
+            Demo Login<br>
+            Username: <b>admin</b><br>
+            Password: <b>1234</b>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="dashboard" id="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            Edu<span>Sphere</span>
+        </div>
+
+        <a class="active" onclick="showSection('home',this)">🏠 Dashboard</a>
+
+        <a onclick="showSection('student',this)">👨‍🎓 Student Registration</a>
+
+        <a onclick="showSection('management',this)">📋 Student Management</a>
+
+        <a onclick="showSection('academic',this)">📚 Academic Details</a>
+
+        <a onclick="showSection('attendance',this)">📊 Attendance</a>
+
+        <a onclick="showSection('fees',this)">💳 Fees Management</a>
+
+        <a onclick="showSection('reports',this)">📑 Reports</a>
+
+        <a class="logout" onclick="logout()">🚪 Logout</a>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+            <h2>Student Management System</h2>
+            <div class="admin">👤 Admin</div>
+        </div>
+
+
+        <section id="home" class="section active">
+
+            <div class="welcome">
+
+                <h1>Welcome to EduSphere</h1>
+
+                <p>
+                    A smart and modern platform for managing students,
+                    academics, attendance and fees.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="icon">👨‍🎓</div>
+                    <h3>250+</h3>
+                    <p>Total Students</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📚</div>
+                    <h3>18</h3>
+                    <p>Total Courses</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <h3>92%</h3>
+                    <p>Average Attendance</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h3>₹8.5L</h3>
+                    <p>Fees Collected</p>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="card">
+
+                <h3>About EduSphere</h3>
+
+                <p>
+                    EduSphere is a digital Student Management System designed
+                    to simplify college administration. It provides a single
+                    platform for student registration, student records,
+                    academic performance, attendance tracking, fee management
+                    and report generation.
+                </p>
+
+                <br>
+
+                <p>
+                    <b>College:</b> The New College, Kolhapur
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section id="student" class="section">
+
+            <div class="form-container">
+
+                <h2>Student Registration</h2>
+
+                <p style="color:#777;margin:8px 0 20px;">
+                    Register new students in the EduSphere system.
+                </p>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Student ID</label>
+                        <input type="text" id="studentId" placeholder="Enter Student ID">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <input type="text" id="studentName" placeholder="Enter Student Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select>
+                            <option>Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="text" placeholder="Enter Mobile Number">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Enter Email">
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Address</label>
+                        <textarea placeholder="Enter Address"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course</label>
+                        <select>
+                            <option>Select Course</option>
+                            <option>BSc Computer Science</option>
+                            <option>BCA</option>
+                            <option>BCS</option>
+                            <option>BCom</option>
+                            <option>BA</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select>
+                            <option>Select Class</option>
+                            <option>FY</option>
+                            <option>SY</option>
+                            <option>TY</option>
+                        </select>
+                    </div>
+
+                    <div class="full">
+                        <button class="primary-btn" onclick="saveStudent()">
+                            Register Student
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section id="management" class="section">
+
+            <div class="table-container">
+
+                <h2>Student Management</h2>
+
+                <p style="color:#777;margin:8px 0 15px;">
+                    View, search, update and delete student records.
+                </p>
+
+                <input class="search" id="searchStudent" onkeyup="searchStudent()" placeholder="🔍 Search Student...">
+
+                <table id="studentTable">
+
+                    <tbody><tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Class</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr>
+                        <td>ST101</td>
+                        <td>Pratiksha Patil</td>
+                        <td>BSc CS</td>
+                        <td>SY</td>
+                        <td>
+                            <span class="badge paid">Active</span>
+                        </td>
+                        <td>
+                            <button class="action-btn edit">Update</button>
+                            <button class="action-btn delete" onclick="deleteRow(this)">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ST102</td>
+                        <td>Sanika Patil</td>
+                        <td>BCA</td>
+                        <td>SY</td>
+                        <td>
+                            <span class="badge paid">Active</span>
+                        </td>
+                        <td>
+                            <button class="action-btn edit">Update</button>
+                            <button class="action-btn delete" onclick="deleteRow(this)">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ST103</td>
+                        <td>Sonam Patil</td>
+                        <td>BSc CS</td>
+                        <td>TY</td>
+                        <td>
+                            <span class="badge paid">Active</span>
+                        </td>
+                        <td>
+                            <button class="action-btn edit">Update</button>
+                            <button class="action-btn delete" onclick="deleteRow(this)">Delete</button>
+                        </td>
+                    </tr>
+
+                </tbody></table>
+
+            </div>
+
+        </section>
+
+
+        <section id="academic" class="section">
+
+            <div class="form-container">
+
+                <h2>Academic Details</h2>
+
+                <p style="color:#777;margin:8px 0 20px;">
+                    Manage marks, percentage and grades.
+                </p>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Roll Number</label>
+                        <input type="text" placeholder="Enter Roll Number">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course</label>
+                        <input type="text" placeholder="Enter Course">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Semester</label>
+                        <select>
+                            <option>Select Semester</option>
+                            <option>Semester 1</option>
+                            <option>Semester 2</option>
+                            <option>Semester 3</option>
+                            <option>Semester 4</option>
+                            <option>Semester 5</option>
+                            <option>Semester 6</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" placeholder="Enter Subject">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Marks</label>
+                        <input type="number" placeholder="Enter Marks">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Marks</label>
+                        <input type="number" placeholder="Enter Total">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Percentage</label>
+                        <input type="text" placeholder="Enter Percentage">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Grade</label>
+                        <input type="text" placeholder="Enter Grade">
+                    </div>
+
+                    <div class="full">
+                        <button class="primary-btn" onclick="alert('Academic details saved successfully!')">
+                            Save Academic Details
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section id="attendance" class="section">
+
+            <div class="table-container">
+
+                <h2>Attendance Management</h2>
+
+                <p style="color:#777;margin:8px 0 15px;">
+                    Track student attendance subject-wise.
+                </p>
+
+                <table>
+
+                    <tbody><tr>
+                        <th>Student ID</th>
+                        <th>Subject</th>
+                        <th>Total Classes</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Attendance</th>
+                    </tr>
+
+                    <tr>
+                        <td>ST101</td>
+                        <td>Java</td>
+                        <td>50</td>
+                        <td>46</td>
+                        <td>4</td>
+                        <td>
+                            <b>92%</b>
+                            <div class="progress">
+                                <span style="width:92%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ST102</td>
+                        <td>Database</td>
+                        <td>50</td>
+                        <td>43</td>
+                        <td>7</td>
+                        <td>
+                            <b>86%</b>
+                            <div class="progress">
+                                <span style="width:86%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ST103</td>
+                        <td>Web Technology</td>
+                        <td>50</td>
+                        <td>48</td>
+                        <td>2</td>
+                        <td>
+                            <b>96%</b>
+                            <div class="progress">
+                                <span style="width:96%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody></table>
+
+            </div>
+
+        </section>
+
+
+        <section id="fees" class="section">
+
+            <div class="table-container">
+
+                <h2>Fees Management</h2>
+
+                <p style="color:#777;margin:8px 0 15px;">
+                    Manage total fees, paid fees and remaining fees.
+                </p>
+
+                <table>
+
+                    <tbody><tr>
+                        <th>Student ID</th>
+                        <th>Course</th>
+                        <th>Total Fees</th>
+                        <th>Paid Fees</th>
+                        <th>Remaining</th>
+                        <th>Payment Status</th>
+                    </tr>
+
+                    <tr>
+                        <td>ST101</td>
+                        <td>BSc CS</td>
+                        <td>₹35,000</td>
+                        <td>₹35,000</td>
+                        <td>₹0</td>
+                        <td>
+                            <span class="badge paid">Paid</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ST102</td>
+                        <td>BCA</td>
+                        <td>₹32,000</td>
+                        <td>₹25,000</td>
+                        <td>₹7,000</td>
+                        <td>
+                            <span class="badge pending">Pending</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ST103</td>
+                        <td>BSc CS</td>
+                        <td>₹35,000</td>
+                        <td>₹30,000</td>
+                        <td>₹5,000</td>
+                        <td>
+                            <span class="badge pending">Pending</span>
+                        </td>
+                    </tr>
+
+                </tbody></table>
+
+            </div>
+
+        </section>
+
+
+        <section id="reports" class="section">
+
+            <h2>Reports Dashboard</h2>
+
+            <p style="color:#777;margin:8px 0 20px;">
+                Generate different student-related reports.
+            </p>
+
+            <div class="report-grid">
+
+                <div class="report">
+
+                    <h3>👨‍🎓 Student List</h3>
+
+                    <p>Total registered students: <b>250</b></p>
+
+                    <br>
+
+                    <button class="primary-btn" onclick="generateReport('Student List')">
+                        Generate Report
+                    </button>
+
+                </div>
+
+
+                <div class="report">
+
+                    <h3>📚 Marks Report</h3>
+
+                    <p>Average student percentage: <b>78%</b></p>
+
+                    <br>
+
+                    <button class="primary-btn" onclick="generateReport('Marks')">
+                        Generate Report
+                    </button>
+
+                </div>
+
+
+                <div class="report">
+
+                    <h3>📊 Attendance Report</h3>
+
+                    <p>Overall attendance: <b>92%</b></p>
+
+                    <br>
+
+                    <button class="primary-btn" onclick="generateReport('Attendance')">
+                        Generate Report
+                    </button>
+
+                </div>
+
+
+                <div class="report">
+
+                    <h3>💳 Fees Report</h3>
+
+                    <p>Fees collection: <b>₹8.5 Lakhs</b></p>
+
+                    <br>
+
+                    <button class="primary-btn" onclick="generateReport('Fees')">
+                        Generate Report
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+function login(){
+
+    let username=document.getElementById("username").value.trim();
+    let password=document.getElementById("password").value.trim();
+
+    if(username==="admin" && password==="1234"){
+
+        document.getElementById("loginPage").style.display="none";
+        document.getElementById("dashboard").style.display="block";
+
+    }else{
+
+        alert("Invalid Username or Password!");
+
+    }
+
+}
+
+
+function logout(){
+
+    document.getElementById("dashboard").style.display="none";
+    document.getElementById("loginPage").style.display="flex";
+
+    document.getElementById("username").value="";
+    document.getElementById("password").value="";
+
+}
+
+
+function showSection(id,element){
+
+    let sections=document.querySelectorAll(".section");
+
+    sections.forEach(function(section){
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    let links=document.querySelectorAll(".sidebar a");
+
+    links.forEach(function(link){
+        link.classList.remove("active");
+    });
+
+    element.classList.add("active");
+
+}
+
+
+function saveStudent(){
+
+    let id=document.getElementById("studentId").value.trim();
+    let name=document.getElementById("studentName").value.trim();
+
+    if(id==="" || name===""){
+
+        alert("Please enter Student ID and Student Name.");
+
+    }else{
+
+        alert("Student Registered Successfully!");
+
+        document.getElementById("studentId").value="";
+        document.getElementById("studentName").value="";
+
+    }
+
+}
+
+
+function searchStudent(){
+
+    let input=document
+        .getElementById("searchStudent")
+        .value
+        .toLowerCase();
+
+    let rows=document.querySelectorAll("#studentTable tr");
+
+    for(let i=1;i<rows.length;i++){
+
+        let text=rows[i].innerText.toLowerCase();
+
+        if(text.includes(input)){
+            rows[i].style.display="";
+        }else{
+            rows[i].style.display="none";
+        }
+
+    }
+
+}
+
+
+function deleteRow(button){
+
+    if(confirm("Are you sure you want to delete this student?")){
+
+        button.parentElement.parentElement.remove();
+
+        alert("Student deleted successfully!");
+
+    }
+
+}
+
+
+function generateReport(type){
+
+    alert(type+" Report Generated Successfully!");
+
+}
+
+</script>
+
+
+
+
+</body></html>
